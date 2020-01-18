@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.4.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.4.0/umd/react-dom.production.min.js"></script>
+  <title>JS Bin</title>
+  <style>
+    .header {
+      display: flex;
+      justify-content: center;
+    }
+
+    body {
+      padding: 30px;
+    }
+
+    .track {
+      border-bottom: 1px solid black;
+    }
+
+    .item {
+      transition: all 1s linear;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+
+  </div>
+  <script>
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          timeOf1: 0,
+          timeOf2: 0,
+          now: Date.now()
+        }
+      }
+      success1() {
+        let last = Date.now()
+        let gap = last - this.state.now
+        this.setState({
+          timeOf1: gap
+        })
+      }
+      success2() {
+        let last = Date.now()
+        let gap = last - this.state.now
+        this.setState({
+          timeOf2: gap
+        })
+      }
+
+      render() {
+        return (
+          <div>
+            <div className="header">
+              <Timer1 timeOf1={this.state.timeOf1} />
+              <Timer2 timeOf2={this.state.timeOf2} />
+            </div>
+            <Playground success1={this.success1.bind(this)}
+              success2={this.success2.bind(this)} />
+          </div>
+        )
+      }
+    }
+
+    function Playground(props) {
+
+      return (
+        <div>
+          <Track1 success={props.success1} />
+          <Track2 success={props.success2} />
+        </div>
+      )
+    }
+
+
+    function Timer1(props) {
+      return (
+        <div>
+          <h3>🐰用时</h3>
+          <span>{props.timeOf1}</span>
+        </div>
+      )
+    }
+
+    function Timer2(props) {
+      return (
+        <div>
+          <h3>🐢用时</h3>
+          <span>{props.timeOf2}</span>
+        </div>
+      )
+    }
+
+    class Track1 extends React.Component {
+      constructor(props) {
+        super(props)
+        let n = 0
+        this.state = {
+          style: {
+            transform: `translateX(${n}%)`
+          }
+        }
+        let timerId = setInterval(() => {
+          n += 10
+          this.setState({
+            style: {
+              transform: `translateX(${n}%)`
+            }
+          })
+          if (n >= 100) {
+            clearInterval(timerId)
+            this.props.success()
+          }
+        }, 1000)
+      }
+      render() {
+        return (
+          <div>
+            <div className="item" style={this.state.style}>🐰</div>
+            <div className="track"></div>
+          </div>
+        )
+      }
+    }
+
+    class Track2 extends React.Component {
+      constructor(props) {
+        super(props)
+        let n = 0
+        this.state = {
+          style: {
+            transform: `translateX(${n}%)`
+          }
+        }
+        let timerId = setInterval(() => {
+          n += 5
+          this.setState({
+            style: {
+              transform: `translateX(${n}%)`
+            }
+          })
+          if (n >= 100) {
+            clearInterval(timerId)
+            this.props.success()
+          }
+        }, 1000)
+      }
+      render() {
+        return (
+          <div>
+            <div className="item" style={this.state.style}>🐢</div>
+            <div className="track"></div>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<App></App>, document.querySelector('#root'))
+  </script>
+</body>
+
+</html>
+
+//https://jsbin.com/rijimerovu/edit?html,js,output
