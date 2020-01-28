@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>龟兔赛跑</title>
+  <style>
+    .App {
+      font-family: sans-serif;
+      text-align: center;
+    }
+
+    .box.green {
+      border: 1px solid green;
+    }
+
+    .box.red {
+      border: 1px solid red;
+    }
+  </style>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const themeContext = React.createContext();
+
+    function Box(props) {
+      return (
+        <themeContext.Consumer>
+          {theme => <div className={`box ${theme}`}>{props.children}</div>}
+
+        </themeContext.Consumer>
+      )
+    }
+    function Button() {
+      return <button>button</button>;
+    }
+    function Input() {
+      return <input />;
+    }
+
+    class App extends React.Component {
+      change = () => {
+        if (this.state.theme === "green") {
+          this.setState({ theme: "red" });
+        } else {
+          this.setState({ theme: "green" });
+        }
+      };
+      constructor() {
+        super();
+        this.state = {
+          theme: "green"
+        };
+      }
+      render() {
+        return (
+          <themeContext.Provider value={this.state.theme}>
+            <div className="App">
+              <button onClick={this.change}>换肤</button>
+              <div>
+                <Box >
+                  <Button />
+                </Box>
+                <Box >
+                  <Input />
+                </Box>
+              </div>
+            </div>
+          </themeContext.Provider>
+        );
+      }
+    }
+
+    const rootElement = document.getElementById("root");
+    ReactDOM.render(<App />, rootElement);
+
+  </script>
+  <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+</body>
+
+</html>
