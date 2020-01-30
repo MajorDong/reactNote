@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+  <script>
+  function stateChange(state, action){
+    if( state === undefined){
+      return 0
+    }
+    switch(action.type){
+      case 'ADD':
+        return state + action.payload
+      case 'MINUS':
+        return state - 1
+      default:
+        return state
+    }
+  }
+  const store = Redux.createStore(stateChange)
+  
+  function add1(){
+    store.dispatch({type: 'ADD', payload:1 })
+  }
+  function add2(){
+    store.dispatch({type: 'ADD', payload: 2})
+  }
+  function minus1(){
+    store.dispatch({ type: 'MINUS'})
+  }
+  function addIfOdd(){
+    if(store.getState() % 2 !== 0){
+      store.dispatch({type: 'ADD', payload: 1})
+    }
+  }
+  function delay2sAdd(){
+    setTimeout(()=>{
+      store.dispatch({type:'ADD', payload: 1})
+    },2000)
+  }
+  
+  function render(store){
+  let app = document.querySelector('#app')
+  app.innerHTML = `
+    <div>
+      <div>Clicked:${store.getState()}<div>
+      <div>
+        <button id="add1" onclick="add1()">+1</button>
+        <button id="add2" onclick="add2()">+2</button>
+        <button id="minus1" onclick="minus1()">-1</button>
+        <button onclick="addIfOdd()">如果是单数就+1</button>
+        <button onclick="delay2sAdd()">延迟两秒后+1</button>
+      </div>
+    </div>
+  `
+}
+
+render(store)
+store.subscribe(()=>{
+  render(store)
+})
+  </script>
+</body>
+</html>

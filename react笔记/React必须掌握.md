@@ -4,7 +4,7 @@
 4. useEffect返回值，第二个参数
 5. 常用hooks
 6. 父子组件通信
-7. Content&redux
+7. Context&redux
 8. redux发送异步请求
 9. ant design
 10. 性能优化
