@@ -8,6 +8,9 @@
   <div id="app"></div>
   <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
   <script>
+  //在createStore时会dispach一次初始化store
+  
+  //reducer1
   function stateChange(state, action){
     if( state === undefined){
       return 0
@@ -21,14 +24,28 @@
         return state
     }
   }
-  const store = Redux.createStore(stateChange)
-  
+  //reducer2
+  const todos = (state = {}) => state
+  //Creat store
+  const store = Redux.createStore(
+    Redux.combineReducers({ //combinReducers的用法，生成两个节点
+      stateChange,
+      todos
+    })
+  )
+ 
+
   function add1(){
     store.dispatch({type: 'ADD', payload:1 })
   }
+
+  //Action Creator
   function add2(){
-    store.dispatch({type: 'ADD', payload: 2})
+    return {type: 'ADD',payload: 2}
   }
+add2 = Redux.bindActionCreators(add2, store.dispatch)
+
+
   function minus1(){
     store.dispatch({ type: 'MINUS'})
   }
@@ -47,7 +64,7 @@
   let app = document.querySelector('#app')
   app.innerHTML = `
     <div>
-      <div>Clicked:${store.getState()}<div>
+      <div>Clicked:${store.getState().stateChange}<div>
       <div>
         <button id="add1" onclick="add1()">+1</button>
         <button id="add2" onclick="add2()">+2</button>

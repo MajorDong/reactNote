@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.mainDiv {
+  display: flex;
+  width: 100%;
+}
+
+.leftNav {
+  height: 1000px;
+  background: gray;
+  width: 20%;
+  padding: 10px 10px;
+  font-size: 20px;
+}
+
+.rightMain{
+  width: 80%;
+}
+.topNav{
+  height:50px ;
+  background-color: #cfdefd;
+}
+.topNav ul{
+ display: flex; 
+ margin: 0px;
+ padding: 0px;
+}
+.topNav li{
+ padding: 10px;
+ text-align: center;
+ list-style: none;
+}
+.videoContent{
+   padding:20px;
+}
