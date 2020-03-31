@@ -1,0 +1,33 @@
+.button1{
+  box-sizing: border-box;
+  margin-top: 100px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+.button1 .text{
+  position: relative;
+  z-index: 1;
+}
+
+.button1 .cri.active{
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #91d3f7;
+  position: absolute;
+  z-index: 0;
+  animation: big 1s ease;
+  opacity: 0.5;
+}
+@keyframes big{
+  0% {
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(17);
+  }
+}
